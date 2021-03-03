@@ -1,9 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { randomBytes } = require('crypto');
+const cors = require('cors');
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
 
 //  Since this is a simple project to demo microservices, we will use in memory as datastore.
 const posts = {};
@@ -13,7 +15,7 @@ app.get('/posts', (req, res) => {
 });
 
 app.post('/posts', (req, res) => {
-    // Just some random id generation
+  // Just some random id generation
   const id = randomBytes(4).toString('hex');
   const { title } = req.body;
 

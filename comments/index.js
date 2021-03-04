@@ -10,6 +10,7 @@ app.use(cors());
 //  Since this is a simple project to demo microservices, we will use in memory as datastore.
 const commentsByPostId = {};
 
+// Get all the comments associated with given post id from request or return empty
 app.get('/posts/:id/comments', (req, res) => {
   res.send(commentsByPostId[req.params.id] || []);
 });
@@ -19,7 +20,7 @@ app.post('/posts/:id/comments', (req, res) => {
   const commentId = randomBytes(4).toString('hex');
   const { content } = req.body;
 
-  // Check if the post id from request already exists in our comments object / data store. If not found just get an emoty array
+  // Check if the post id from request already exists in our comments data store. If not found just get an empty array
   const comments = commentsByPostId[req.params.id] || [];
   comments.push({ id: commentId, content });
 

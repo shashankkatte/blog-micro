@@ -16,7 +16,7 @@ export default () => {
     fetchPosts();
   }, []);
 
-  const renderedPosts = Object.values(posts).map(post => {
+  const renderedPosts = Object.values(posts).map((post) => {
     return (
       <div
         className="card"

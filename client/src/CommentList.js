@@ -16,7 +16,7 @@ export default ({ postId }) => {
     fetchData();
   }, []);
 
-  const renderedComments = comments.map(comment => {
+  const renderedComments = comments.map((comment) => {
     return <li key={comment.id}>{comment.content}</li>;
   });
 

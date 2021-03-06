@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const { randomBytes } = require('crypto');
 const cors = require('cors');
 const axios = require('axios');

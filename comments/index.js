@@ -22,7 +22,7 @@ app.post('/posts/:id/comments', async (req, res) => {
 
   // Check if the post id from request already exists in our comments data store. If not found just get an empty array
   const comments = commentsByPostId[req.params.id] || [];
-  comments.push({ id: commentId, content });
+  comments.push({ id: commentId, content, status: 'pending' });
 
   commentsByPostId[req.params.id] = comments;
 
@@ -33,16 +33,42 @@ app.post('/posts/:id/comments', async (req, res) => {
       id: commentId,
       content,
       postId: req.params.id,
-    },
+      status: 'pending'
+    }
   });
 
   res.status(201).send(comments);
 });
 
-app.post('/events',(req,res) => {
-  console.log('Received event', req.body.type);
+app.post('/events', async (req, res) => {
+  console.log('Event Received:', req.body.type);
+
+  const { type, data } = req.body;
+
+  if (type === 'CommentModerated') {
+    // Update the approriate comment in our data store
+    const { postId, id, status, content } = data;
+    const comments = commentsByPostId[postId];
+
+    const comment = comments.find(comment => {
+      return comment.id === id;
+    });
+    comment.status = status;
+
+    // Fire an event saying update has occured
+    await axios.post('http://localhost:4005/events', {
+      type: 'CommentUpdated',
+      data: {
+        id,
+        status,
+        postId,
+        content
+      }
+    });
+  }
+
   res.send({});
-})
+});
 
 app.listen(4001, () => {
   console.log('Comments service listening on port 4001');

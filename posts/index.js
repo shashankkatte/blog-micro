@@ -5,12 +5,12 @@ const cors = require('cors');
 const axios = require('axios');
 
 const app = express();
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cors());
 
 //  Since this is a simple project to demo microservices, we will use in memory as datastore.
 const posts = {};
-
+ 
 // Get all posts ever created
 app.get('/posts', (req, res) => {
   res.send(posts);

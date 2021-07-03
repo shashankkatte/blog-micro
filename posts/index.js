@@ -16,7 +16,7 @@ app.get('/posts', (req, res) => {
 });
 
 //  create a new post { id, title }
-app.post('/posts', async (req, res) => {
+app.post('/posts/create', async (req, res) => {
   // Just some random id generation
   const id = randomBytes(4).toString('hex');
   const { title } = req.body;
@@ -28,7 +28,7 @@ app.post('/posts', async (req, res) => {
   };
 
   // fire an event that post is created
-  await axios.post('http://localhost:4005/events', {
+  await axios.post('http://event-bus-srv:4005/events', {
     type: 'PostCreated',
     data: {
       id,
@@ -45,5 +45,6 @@ app.post('/events',(req,res) => {
 })
 
 app.listen(4000, () => {
+console.log('v2');
   console.log('Posts service listening on port 4000');
 });

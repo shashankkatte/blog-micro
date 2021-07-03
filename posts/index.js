@@ -16,7 +16,7 @@ app.get('/posts', (req, res) => {
 });
 
 //  create a new post { id, title }
-app.post('/posts', async (req, res) => {
+app.post('/posts/create', async (req, res) => {
   // Just some random id generation
   const id = randomBytes(4).toString('hex');
   const { title } = req.body;

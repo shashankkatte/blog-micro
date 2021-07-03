@@ -8,7 +8,7 @@ export default () => {
 
   const fetchPosts = async () => {
     // Get request to query service to get all posts and comments in one shot
-    const res = await axios.get('http://localhost:4002/posts');
+    const res = await axios.get('http://posts.com/posts');
 
     setPosts(res.data);
   };
